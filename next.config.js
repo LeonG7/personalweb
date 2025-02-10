@@ -11,6 +11,17 @@ const nextConfig = {
       test: /\.md$/,
       use: 'raw-loader',
     })
+    config.module.rules.push({
+      test: /\.(mp4|webm)$/,
+      use: {
+        loader: 'file-loader',
+        options: {
+          publicPath: `${process.env.NODE_ENV === 'production' ? '/personalweb' : ''}/videos/`,
+          outputPath: 'static/videos/',
+          name: '[name].[ext]',
+        },
+      },
+    });
     return config
   },
   env: {

@@ -10,6 +10,8 @@ import AboutMe from '@/components/AboutMe'
 import ScrollAnimation from '@/components/ScrollAnimation'
 import type { Post } from '@/utils/mdx'
 
+const basePath = process.env.NODE_ENV === 'production' ? '/personalweb' : '';
+
 // 标题组件
 function SectionTitle({ title, description }: { title: string; description?: string }) {
   return (
@@ -44,7 +46,7 @@ function BlogCard({ post }: { post: Post }) {
       {post.coverImage && (
         <div className="relative h-48 overflow-hidden">
           <Image
-            src={post.coverImage}
+            src={`${basePath}/images/${post.coverImage}`}
             alt={post.title}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"

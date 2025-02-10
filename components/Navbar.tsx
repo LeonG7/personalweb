@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
+const basePath = process.env.NODE_ENV === 'production' ? '/personalweb' : '';
+
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -25,7 +27,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link 
-            href="/" 
+            href={`${basePath}/`} 
             className="flex items-center space-x-3 group"
           >
             <span className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent group-hover:opacity-80 transition-opacity">
@@ -35,8 +37,8 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <NavLink href="/works">作品集</NavLink>
-            <NavLink href="/blog">博客</NavLink>
+            <NavLink href={`${basePath}/works`}>作品集</NavLink>
+            <NavLink href={`${basePath}/blog`}>博客</NavLink>
             <button className="nav-button">
               联系我
             </button>
@@ -84,8 +86,8 @@ export default function Navbar() {
         }`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1 bg-white/80 backdrop-blur-md shadow-lg">
-          <MobileNavLink href="/works">作品集</MobileNavLink>
-          <MobileNavLink href="/blog">博客</MobileNavLink>
+          <MobileNavLink href={`${basePath}/works`}>作品集</MobileNavLink>
+          <MobileNavLink href={`${basePath}/blog`}>博客</MobileNavLink>
           <button className="w-full text-left block px-3 py-2 text-base font-medium text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors">
             联系我
           </button>
