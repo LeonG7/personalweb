@@ -29,6 +29,13 @@ jobs:
       - name: Add .nojekyll file
         run: touch out/.nojekyll
 
+      - name: Copy static assets
+        run: |
+          mkdir -p out/images
+          mkdir -p out/videos
+          cp -r public/images/* out/images/
+          cp -r public/videos/* out/videos/
+
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:

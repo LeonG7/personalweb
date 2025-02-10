@@ -10,19 +10,8 @@ const nextConfig = {
     config.module.rules.push({
       test: /\.md$/,
       use: 'raw-loader',
-    })
-    config.module.rules.push({
-      test: /\.(mp4|webm)$/,
-      use: {
-        loader: 'file-loader',
-        options: {
-          publicPath: `${process.env.NODE_ENV === 'production' ? '/personalweb' : ''}/videos/`,
-          outputPath: 'static/videos/',
-          name: '[name].[ext]',
-        },
-      },
     });
-    return config
+    return config;
   },
   env: {
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
