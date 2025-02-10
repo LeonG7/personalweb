@@ -3,7 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # 或者你的默认分支名称
+      - main
+
+permissions:
+  contents: write
 
 jobs:
   deploy:
@@ -11,6 +14,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # 获取所有历史记录
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -20,17 +25,73 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Sync code changes
+        run: |
+          echo "Syncing code changes..."
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 如果有更改，提交它们
+          git add .
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Sync code changes [skip ci]" && git push)
+
       - name: Build
         run: npm run build
 
-      - name: Export
-        run: npm run export
+      - name: Debug - List Project Root
+        run: |
+          echo "Project root contents:"
+          ls -la
+          echo "Public directory contents:"
+          ls -la public || echo "No public directory"
 
       - name: Add .nojekyll file
         run: touch out/.nojekyll
+
+      - name: Debug - Check Build Output
+        run: |
+          echo "Build output (out) contents:"
+          ls -la out/
+          echo "\nChecking for specific files:"
+          find out/ -name "*.jpg" -o -name "*.png" -o -name "*.mp4"
+
+      - name: Copy static assets and generate posts
+        run: |
+          echo "Generating posts.json..."
+          node scripts/generate-posts.js
+          
+          echo "Creating directories..."
+          mkdir -p out/images
+          mkdir -p out/videos
+          
+          echo "Copying static files..."
+          cp -r public/* out/ || echo "No public files to copy"
+          
+          echo "Final out directory contents:"
+          ls -la out/
+
+      - name: Debug - List directories
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "List public directory:"
+          ls -la public || echo "No public directory"
+          echo "List public/images directory:"
+          ls -la public/images || echo "No images directory"
+          echo "List public/videos directory:"
+          ls -la public/videos || echo "No videos directory"
+          echo "List out directory:"
+          ls -la out || echo "No out directory"
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: out 
+          folder: out
+          clean: true
+
+      - name: Cleanup
+        run: |
+          echo "Cleaning up..."
+          git checkout -- .
+          git clean -fd 
