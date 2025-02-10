@@ -26,8 +26,10 @@ function SectionTitle({ title, description }: { title: string; description?: str
 export default function BlogSection() {
   const [posts, setPosts] = useState<Post[]>([])
 
+  const basePath = process.env.NODE_ENV === 'production' ? '/personalweb' : '';
+
   useEffect(() => {
-    fetch('/personalweb/posts.json')  // 注意路径包含仓库名
+    fetch(`${basePath}/api/blog`)
       .then(res => res.json())
       .then(data => setPosts(data.posts))
       .catch(console.error)

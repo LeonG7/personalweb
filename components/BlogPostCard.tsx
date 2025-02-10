@@ -4,6 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Post } from '@/utils/mdx'
 
+const basePath = process.env.NODE_ENV === 'production' ? '/personalweb' : '';
+
 export default function BlogPostCard({ post }: { post: Post }) {
   // 确保 slug 是有效的 URL 路径
   const safeSlug = post.slug
@@ -19,7 +21,7 @@ export default function BlogPostCard({ post }: { post: Post }) {
       {post.coverImage && (
         <div className="relative h-48 overflow-hidden">
           <Image
-            src={post.coverImage}
+            src={`${basePath}${post.coverImage}`}
             alt={post.title}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
