@@ -17,7 +17,7 @@ interface Photo {
 const photos: Photo[] = [
   {
     id: 1,
-    src: '/images/海洋之心.jpg',
+    src: '/photos/海洋之心.jpg',
     title: '海洋之心',
     location: '海岸线',
     year: 2024,
@@ -25,7 +25,7 @@ const photos: Photo[] = [
   },
   {
     id: 2,
-    src: '/images/雪山倒影.jpg',
+    src: '/photos/雪山倒影.jpg',
     title: '雪山倒影',
     location: '高山湖泊',
     year: 2024,
@@ -33,7 +33,7 @@ const photos: Photo[] = [
   },
   {
     id: 3,
-    src: '/images/银河教堂.jpg',
+    src: '/photos/银河教堂.jpg',
     title: '银河教堂',
     location: '新西兰',
     year: 2024,
@@ -41,7 +41,7 @@ const photos: Photo[] = [
   },
   {
     id: 4,
-    src: '/images/晨雾渔舟.jpg',
+    src: '/photos/晨雾渔舟.jpg',
     title: '晨雾渔舟',
     location: '日月潭',
     year: 2024,
@@ -49,7 +49,7 @@ const photos: Photo[] = [
   },
   {
     id: 5,
-    src: '/images/山巅日落.jpg',
+    src: '/photos/山巅日落.jpg',
     title: '山巅日落',
     location: '阿尔卑斯山',
     year: 2024,
@@ -57,7 +57,7 @@ const photos: Photo[] = [
   },
   {
     id: 6,
-    src: '/images/极光之夜.jpg',
+    src: '/photos/极光之夜.jpg',
     title: '极光之夜',
     location: '挪威',
     year: 2024,

@@ -55,48 +55,18 @@ jobs:
           echo "\nChecking for specific files:"
           find out/ -name "*.jpg" -o -name "*.png" -o -name "*.mp4"
 
-      - name: Copy static assets and generate posts
+      - name: Copy static assets
         run: |
-          echo "Generating posts.json..."
-          node scripts/generate-posts.js
-          
           echo "Creating directories..."
-          mkdir -p out/images
+          mkdir -p out/photos
           mkdir -p out/videos
           
-          echo "Listing public directory contents:"
-          ls -la public/
-          
-          echo "Listing public/images contents:"
-          ls -la public/images/
-          
           echo "Copying static files..."
-          cp -rv public/* out/ || echo "No public files to copy"
+          cp -r public/* out/
           
-          echo "Listing final out/images contents:"
-          ls -la out/images/
-          
-          echo "Final out directory structure:"
-          find out/ -type f
-
-      - name: Verify image paths
-        run: |
-          echo "Checking for specific images:"
-          find out/ -name "海洋之心.jpg" || echo "Image not found"
-          find out/ -name "*.jpg" || echo "No jpg files found"
-
-      - name: Debug - List directories
-        run: |
-          echo "Current directory:"
-          pwd
-          echo "List public directory:"
-          ls -la public || echo "No public directory"
-          echo "List public/images directory:"
-          ls -la public/images || echo "No images directory"
-          echo "List public/videos directory:"
-          ls -la public/videos || echo "No videos directory"
-          echo "List out directory:"
-          ls -la out || echo "No out directory"
+          echo "Verifying files..."
+          ls -la out/photos/
+          ls -la out/videos/
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
