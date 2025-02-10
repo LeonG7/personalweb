@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+const basePath = process.env.NODE_ENV === 'production' ? '/personalweb' : '';
 
 export default function BackgroundVideo() {
   return (
@@ -17,7 +17,7 @@ export default function BackgroundVideo() {
             objectPosition: 'center center'
           }}
         >
-          <source src="/videos/background.mp4" type="video/mp4" />
+          <source src={`${basePath}/videos/background.mp4`} type="video/mp4" />
         </video>
         
         {/* 渐变遮罩 */}

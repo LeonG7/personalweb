@@ -3,56 +3,65 @@
 import { useState } from 'react'
 import Image from 'next/image'
 
+const basePath = process.env.NODE_ENV === 'production' ? '/personalweb' : '';
+
 interface Photo {
   id: number
   src: string
   title: string
   location: string
   year: number
+  description: string
 }
 
 const photos: Photo[] = [
   {
     id: 1,
-    src: '/photos/海洋之心.jpg',
+    src: '/images/海洋之心.jpg',
     title: '海洋之心',
     location: '海岸线',
-    year: 2024
+    year: 2024,
+    description: '蔚蓝深邃的海洋'
   },
   {
     id: 2,
-    src: '/photos/雪山倒影.jpg',
+    src: '/images/雪山倒影.jpg',
     title: '雪山倒影',
     location: '高山湖泊',
-    year: 2024
+    year: 2024,
+    description: '雪山倒影'
   },
   {
     id: 3,
-    src: '/photos/银河教堂.jpg',
+    src: '/images/银河教堂.jpg',
     title: '银河教堂',
     location: '新西兰',
-    year: 2024
+    year: 2024,
+    description: '银河教堂'
   },
   {
     id: 4,
-    src: '/photos/晨雾渔舟.jpg',
+    src: '/images/晨雾渔舟.jpg',
     title: '晨雾渔舟',
     location: '日月潭',
-    year: 2024
+    year: 2024,
+    description: '晨雾渔舟'
   },
   {
     id: 5,
-    src: '/photos/山巅日落.jpg',
+    src: '/images/山巅日落.jpg',
     title: '山巅日落',
     location: '阿尔卑斯山',
-    year: 2024
+    year: 2024,
+    description: '山巅日落'
   },
   {
     id: 6,
-    src: '/photos/极光之夜.jpg',
+    src: '/images/极光之夜.jpg',
     title: '极光之夜',
     location: '挪威',
-    year: 2024
+    year: 2024,
+    description: '极光之夜'
   }
 ]
 
@@ -68,15 +77,17 @@ export default function PhotoGallery() {
           onClick={() => setSelectedPhoto(photo)}
         >
           {/* 图片 */}
-          <Image
-            src={photo.src}
-            alt={photo.title}
-            fill
-            className="object-cover transform transition-all duration-700 ease-out-expo 
-                       group-hover:scale-110"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            priority
-          />
+          <div className="aspect-w-4 aspect-h-3">
+            <Image
+              src={`${basePath}${photo.src}`}
+              alt={photo.title}
+              fill
+              className="object-cover transform transition-all duration-700 ease-out-expo 
+                         group-hover:scale-110"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority
+            />
+          </div>
 
           {/* 渐变遮罩 - 优化动画 */}
           <div 
@@ -135,7 +146,7 @@ export default function PhotoGallery() {
               </svg>
             </button>
             <Image
-              src={selectedPhoto.src}
+              src={`${basePath}${selectedPhoto.src}`}
               alt={selectedPhoto.title}
               width={1200}
               height={800}

@@ -64,11 +64,26 @@ jobs:
           mkdir -p out/images
           mkdir -p out/videos
           
-          echo "Copying static files..."
-          cp -r public/* out/ || echo "No public files to copy"
+          echo "Listing public directory contents:"
+          ls -la public/
           
-          echo "Final out directory contents:"
-          ls -la out/
+          echo "Listing public/images contents:"
+          ls -la public/images/
+          
+          echo "Copying static files..."
+          cp -rv public/* out/ || echo "No public files to copy"
+          
+          echo "Listing final out/images contents:"
+          ls -la out/images/
+          
+          echo "Final out directory structure:"
+          find out/ -type f
+
+      - name: Verify image paths
+        run: |
+          echo "Checking for specific images:"
+          find out/ -name "海洋之心.jpg" || echo "Image not found"
+          find out/ -name "*.jpg" || echo "No jpg files found"
 
       - name: Debug - List directories
         run: |

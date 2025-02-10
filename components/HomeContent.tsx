@@ -31,6 +31,7 @@ function SectionTitle({ title, description }: { title: string; description?: str
 
 // 博客卡片组件
 function BlogCard({ post }: { post: Post }) {
+  const basePath = process.env.NODE_ENV === 'production' ? '/personalweb' : '';
   const safeSlug = post.slug
     .toLowerCase()
     .replace(/\s+/g, '-')
@@ -38,13 +39,13 @@ function BlogCard({ post }: { post: Post }) {
 
   return (
     <Link 
-      href={`/blog/${safeSlug}`}
+      href={`${basePath}/blog/${safeSlug}`}
       className="group block overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-xl transition-shadow"
     >
       {post.coverImage && (
         <div className="relative h-48 overflow-hidden">
           <Image
-            src={post.coverImage}
+            src={`${basePath}${post.coverImage.startsWith('/') ? post.coverImage : `/${post.coverImage}`}`}
             alt={post.title}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -84,11 +85,12 @@ function BlogCard({ post }: { post: Post }) {
 
 export default function HomeContent() {
   const [posts, setPosts] = useState<Post[]>([])
+  const basePath = process.env.NODE_ENV === 'production' ? '/personalweb' : '';
 
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const response = await fetch('/api/posts')
+        const response = await fetch(`${basePath}/posts.json`)
         const data = await response.json()
         setPosts(data.posts)
       } catch (error) {
