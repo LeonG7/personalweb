@@ -2,9 +2,13 @@
 const nextConfig = {
   output: 'export',
   images: {
-    formats: ['image/avif', 'image/webp'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    unoptimized: true
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+    ],
   },
   webpack: (config) => {
     config.module.rules.push({
@@ -17,7 +21,7 @@ const nextConfig = {
     NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
   },
   basePath: process.env.NODE_ENV === 'production' ? '/personalweb' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/personalweb/' : ''
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/personalweb' : '',
 }
 
 module.exports = nextConfig

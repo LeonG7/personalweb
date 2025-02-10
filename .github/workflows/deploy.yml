@@ -29,12 +29,39 @@ jobs:
       - name: Add .nojekyll file
         run: touch out/.nojekyll
 
+      - name: Check public directory
+        run: |
+          echo "Listing public directory contents:"
+          ls -la public/
+          echo "Listing public/images contents:"
+          ls -la public/images/ || echo "No images directory"
+          echo "Listing public/videos contents:"
+          ls -la public/videos/ || echo "No videos directory"
+
       - name: Copy static assets
         run: |
+          echo "Creating directories..."
           mkdir -p out/images
           mkdir -p out/videos
-          cp -r public/images/* out/images/
-          cp -r public/videos/* out/videos/
+          
+          echo "Copying images..."
+          if [ -d "public/images" ]; then
+            cp -rv public/images/* out/images/
+          else
+            echo "No images directory found in public/"
+          fi
+          
+          echo "Copying videos..."
+          if [ -d "public/videos" ]; then
+            cp -rv public/videos/* out/videos/
+          else
+            echo "No videos directory found in public/"
+          fi
+          
+          echo "Listing final contents..."
+          ls -la out/
+          ls -la out/images/ || echo "No images in output"
+          ls -la out/videos/ || echo "No videos in output"
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
